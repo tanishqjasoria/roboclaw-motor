@@ -10,7 +10,7 @@ from roboclaw import Roboclaw
 #rc = Roboclaw("COM3",115200)
 #Linux comport name
 rc = Roboclaw("/dev/ttyACM1",115200)
-f=open("final.txt","w+")
+f=open("final.csv","w+")
 
 def displayspeed(ti):
 	enc1 = rc.ReadEncM1(address)
@@ -67,8 +67,11 @@ motor_data.append(0)
 motor_data.append(0)
 motor_data.append(0)
 motor_data.append(0)
-
+rc.SpeedAccelDeccelPositionM1(address,0,0,0,0,0)
+rc.SpeedAccelDeccelPositionM2(address,0,0,0,0,0)
+time.sleep(1)
 init_time=time.clock();
+
 while True:
 
 
@@ -100,10 +103,11 @@ while True:
 			{
 
 			}
-		displayspeed(time.clock()-init_time)
-
+		
 		rc.SpeedAccelDeccelPositionM1(address,0,0,0,int((motor_data[1]/360)*2000),0)
 		rc.SpeedAccelDeccelPositionM2(address,0,0,0,int((motor_data[2]/360)*2000),0)
+		displayspeed(time.clock()-init_time)
+
 
 		print "Time_Actual",(time.clock()-init_time)
 
